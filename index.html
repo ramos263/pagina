@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Choco Love</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1548386135-9002f96a0dc4?q=80&w=1176&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      transition: background 0.5s ease;
+    }
+
+    #loginScreen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      backdrop-filter: blur(6px);
+    }
+
+    #mainContent {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .menu-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 15px;
+      backdrop-filter: blur(6px);
+      width: 100%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .choco-btn {
+      margin: 10px;
+      padding: 20px 40px;
+      border: none;
+      background-color: #AC57FA; /* Color morado claro */
+      color: white;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: transform 0.2s, background-color 0.3s;
+      white-space: nowrap;
+    }
+
+    .choco-btn:hover {
+      transform: scale(1.1);
+      background-color: #8A3FD9; /* Morado más oscuro para hover */
+    }
+
+    .content-box {
+      margin: 30px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 900px;
+      min-height: 700px;
+      overflow-y: auto;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(6px);
+    }
+
+    /* Para videos lado a lado */
+    .video-gallery {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .video-gallery video {
+      width: 300px;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    /* Para imágenes lado a lado */
+    .image-gallery {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .image-gallery img {
+      width: 300px;
+      border-radius: 12px;
+    }
+
+    /* Texto centrado y colores para poemas y mensajes */
+    .poem-text {
+      color: #8541f2;
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.5;
+      margin-top: 20px;
+    }
+    .poem-title {
+      color: #8541f2;
+      text-align: center;
+    }
+    .poem-title-2 {
+      color: #b712af;
+      text-align: center;
+      margin-top: 30px;
+    }
+    .poem-text-2 {
+      color: #b712af;
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.5;
+      margin-top: 20px;
+    }
+    .message-text {
+      color: #5914c8;
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.5;
+      margin-top: 20px;
+      white-space: pre-line;
+    }
+    .message-title {
+      color: #0d82ac;
+      text-align: center;
+    }
+    .message-end {
+      color: #6c17bb;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pantalla de login -->
+  <div id="loginScreen">
+    <h2 style="color:#7b3f00;">💖 Ingresa la contraseña :3 💖</h2>
+    <p style="margin-bottom: 20px; font-size: 18px; color:#444;">Espero que te guste ✨</p>
+    <input
+      type="password"
+      id="passwordInput"
+      placeholder="Ingresa la contraseña"
+      style="padding: 12px; border-radius: 12px; border: 2px solid #ff8fa3; width: 250px; font-size: 16px; background-color: #fff5f8; color: #333; box-shadow: 0 0 10px rgba(255, 143, 163, 0.2);"
+      onfocus="this.style.borderColor='#ff5e7e'"
+    />
+    <br /><br />
+    <button
+      onclick="checkPassword()"
+      style="padding: 12px 24px; font-size: 16px; background-color: #ff5e7e; color: white; border: none; border-radius: 12px; cursor: pointer; box-shadow: 0 5px 15px rgba(255, 94, 126, 0.3);"
+      onmouseover="this.style.backgroundColor='#e44e6f'"
+      onmouseout="this.style.backgroundColor='#ff5e7e'"
+    >
+      💗 Entrar 💗
+    </button>
+    <p id="errorMsg" style="color:red; margin-top: 15px;"></p>
+  </div>
+
+  <!-- Contenido principal -->
+  <div id="mainContent">
+    <!-- 🎵 Música de fondo -->
+    <audio id="backgroundMusic" loop>
+      <source src="musica/romantica.mp3" type="audio/mp3" />
+      Tu navegador no soporta audio 😢
+    </audio>
+
+    <div class="menu-bar">
+      <button class="choco-btn" onclick="showContent('videos')">⏯️ Videos para ti</button>
+      <button class="choco-btn" onclick="showContent('poemas')">📜 Poemas para ti</button>
+      <button class="choco-btn" onclick="showContent('imagenes')">🖼️ Imágenes para ti</button>
+      <button class="choco-btn" onclick="showContent('mensajes')">💬 Algunas palabras para ti</button>
+    </div>
+
+    <div class="content-box" id="contentBox">
+      <p>
+        Bueno, un pequeño regalo de mi parte. Sé que no soy el mejor chico del mundo y que últimamente te he hecho daño. Perdón por eso 😔.<br>
+        Este regalo te lo quería dar en tu cumpleaños, pero bueno… espero que te guste lo hice con todo mi corazón ❤️.
+      </p>
+    </div>
+  </div>
+
+<script>
+  const correctPassword = "17/09/2023";
+
+  function checkPassword() {
+    const input = document.getElementById("passwordInput").value;
+    const errorMsg = document.getElementById("errorMsg");
+
+    if (input === correctPassword) {
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("mainContent").style.display = "flex";
+
+      // Reproduce la música
+      const music = document.getElementById("backgroundMusic");
+      music.volume = 0.3;
+      music.play().catch(() => {
+        console.warn("El navegador bloqueó el autoplay");
+      });
+    } else {
+      errorMsg.textContent = "jajajaj no te diré la contraseña, adivínala 😘";
+    }
+  }
+
+  function showContent(type) {
+    const contentBox = document.getElementById("contentBox");
+    const music = document.getElementById("backgroundMusic");
+
+    if (type === "videos") {
+      contentBox.innerHTML = `
+        <h2 style="color: #AC57FA; text-align: center;">🌹 Videos para ti 🌹</h2>
+        <div class="video-gallery">
+          <video controls>
+            <source src="musica/hola.mp4" type="video/mp4" />
+            Tu navegador no soporta video 😢
+          </video>
+          <video controls>
+            <source src="musica/2.mp4" type="video/mp4" />
+            Tu navegador no soporta video 😢
+          </video>
+          <video controls>
+            <source src="musica/3.mp4" type="video/mp4" />
+            Tu navegador no soporta video 😢
+          </video>
+          <video controls>
+            <source src="musica/4.mp4" type="video/mp4" />
+            Tu navegador no soporta video 😢
+          </video>
+        </div>
+      `;
+
+      if (music && !music.paused) {
+        music.pause();
+      }
+
+      // Pausar música cuando un video se reproduce y reanudarla cuando pausa o termina
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = contentBox.innerHTML;
+      const videos = tempDiv.querySelectorAll('video');
+      videos.forEach(video => {
+        video.onplay = () => { if(music && !music.paused) music.pause(); };
+        video.onpause = () => { if(music && music.paused) music.play(); };
+        video.onended = () => { if(music && music.paused) music.play(); };
+      });
+
+    } else if (type === "poemas") {
+      contentBox.innerHTML = `
+        <h2 class="poem-title">Para mi niña</h2>
+        <p class="poem-text">
+          Mi niña, bajo este cielo infinito,<br />
+          donde la luna vela tu sueño dormido,<br />
+          mi vida se entrelaza con estrellas y susurros,<br />
+          creando un universo solo para nosotros dos.
+        </p>
+        <p class="poem-text">
+          Eres luz en mi noche, mi dulce canción,<br />
+          la razón de cada latido en mi corazón.<br />
+          En este vasto universo tan grande y profundo,<br />
+          tú eres mi todo, mi mundo.
+        </p>
+        <h2 class="poem-title-2">Otro pequeño poema para ti</h2>
+        <p class="poem-text-2">
+          Bajo el cielo que nos envuelve,<br />
+          tu sonrisa brilla como la luna,<br />
+          un reflejo suave que ilumina<br />
+          cada rincón de esta vida juntos.
+        </p>
+        <p class="poem-text-2">
+          Eres la melodía que encanta,<br />
+          el susurro dulce entre las estrellas,<br />
+          la magia sutil del universo,<br />
+          un sueño hermoso hecho realidad.
+        </p>
+        <p class="poem-text-2">
+          Cada gesto tuyo es un poema,<br />
+          cada mirada, un mundo infinito,<br />
+          y en ti se funden los colores<br />
+          que pintan mi corazón contento.
+        </p>
+        <p class="poem-text-2">
+          Eres fuerza y dulzura combinadas,<br />
+          una luz que nunca se apaga,<br />
+          la gran chica que enfrenta la vida<br />
+          con valentía, alma y esperanza.
+        </p>
+        <p class="poem-text-2">
+          En cada paso que das, enseñas<br />
+          que la nobleza vive en tu ser,<br />
+          tu sonrisa es faro y guía,<br />
+          tu mirada, pura verdad y querer.
+        </p>
+        <p class="poem-text-2">
+          No hay desafío que te detenga,<br />
+          ni tormenta que apague tu fuego,<br />
+          porque eres más que un simple sueño,<br />
+          eres grandeza en cada latido.
+        </p>
+      `;
+
+      if (music && music.paused) {
+        music.play();
+      }
+    } else if (type === "imagenes") {
+      contentBox.innerHTML = `
+        <h3>Imágenes para ti</h3>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <img src="imagenes/1.jpg" alt="Imagen 1" />
+          <img src="imagenes/2.jpg" alt="Imagen 2" />
+          <img src="imagenes/4.jpg" alt="Imagen 4" />
+          <img src="imagenes/5.jpg" alt="Imagen 5" />
+          <img src="imagenes/6.jpg" alt="Imagen 6" />
+          <img src="imagenes/7.jpg" alt="Imagen 7" />
+          <img src="imagenes/8.jpg" alt="Imagen 8" />
+          <img src="imagenes/9.jpg" alt="Imagen 9" />
+          <img src="imagenes/10.jpg" alt="Imagen 10" />
+        </div>
+      `;
+
+      if (music && music.paused) {
+        music.play();
+      }
+    } else if (type === "mensajes") {
+      contentBox.innerHTML = `
+        <h2 class="message-title">Para ti</h2>
+        <p class="message-text">
+          bueno solo queria decirte que la verdad estoy muy orgulloso de ti y que eres muy importante para mi se que me equivocado mucho se que tu mama
+          te la pasa recordando tus errores y se que es mi culpa pero la verdad estoy muy feliz de la chica que te has convertido en verdad te has vuelto una
+          gran chica asi que no la escuches si? se que estuvo mal lo que hice y me disculpo, pero la verdad quiero esforzarme para recuperarme porque tu eres
+          todo para mi y sin ti nada seria igual la neta te has vuetlo una parte de mi que dañe sin querer se que parece que lo hice a proposito pero la verdad
+          lo hice por dejarme llevar y pido perdon por eso la verdad te amo y eres mi tesoro eres la estrella mas brillante de mi universo y eres el sol que ilumina
+          tendras mi apoyo y siempre estare orgulloso de la gran chica que eres, no se si estas cansada de mi o algo asi pero aun asi quiero que sepas que yo siempre estare apoyandote
+
+          quiero que sepas que te amo con todo mi corazon y mi alma la verdad siempre estare hay y aunque no este fisicamente siempre estare emocionalmente apoyandote en todo momento
+          no te dejare sola, la verdad no se si leeras todo esto pero si lo leiste espero que sea un gran dia para ti y que nunca me olvides, se que no e sido un buen chico
+          y se que debes odiarme con todo tu corazon se que estas molesta conmigo y todo eso pero aun asi quiero que sepas que aunque llegues a sentir solo odio hacia mi
+          yo siempre te vere como la chica mas linda y mas perfecta de este mudo, la verdad me encantas y eres todo para mi y aunque tengamos mil problemas yo siempre te seguire amando como
+          el primer dia, la verdad estoy enamorado de ti y no se que haria si te llegara a perder por eso me da miedo cuando te haces daño porque si te llegara a suceder algo mi mundo
+          se vendria abajo aparte que no sabria que hacer en un mundo donde tu no estuvieras, se que para el mundo eres una chica mas pero para mi tu eres mi mundo y la verdad no quiero que te suceda nada
+        </p>
+        <h2 class="message-end">te amo</h2>
+      `;
+
+      if (music && music.paused) {
+        music.play();
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
