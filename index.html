@@ -48,7 +48,7 @@
       margin: 10px;
       padding: 20px 40px;
       border: none;
-      background-color: #AC57FA; /* Color morado claro */
+      background-color: #AC57FA;
       color: white;
       border-radius: 12px;
       cursor: pointer;
@@ -59,7 +59,7 @@
 
     .choco-btn:hover {
       transform: scale(1.1);
-      background-color: #8A3FD9; /* Morado más oscuro para hover */
+      background-color: #8A3FD9;
     }
 
     .content-box {
@@ -75,7 +75,6 @@
       backdrop-filter: blur(6px);
     }
 
-    /* Para videos lado a lado */
     .video-gallery {
       display: flex;
       justify-content: center;
@@ -90,7 +89,6 @@
       border-radius: 12px;
     }
 
-    /* Para imágenes lado a lado */
     .image-gallery {
       display: flex;
       gap: 10px;
@@ -103,7 +101,6 @@
       border-radius: 12px;
     }
 
-    /* Texto centrado y colores para poemas y mensajes */
     .poem-text {
       color: #8541f2;
       text-align: center;
@@ -175,7 +172,6 @@
 
   <!-- Contenido principal -->
   <div id="mainContent">
-    <!-- 🎵 Música de fondo -->
     <audio id="backgroundMusic" loop>
       <source src="musica/romantica.mp3" type="audio/mp3" />
       Tu navegador no soporta audio 😢
@@ -186,6 +182,7 @@
       <button class="choco-btn" onclick="showContent('poemas')">📜 Poemas para ti</button>
       <button class="choco-btn" onclick="showContent('imagenes')">🖼️ Imágenes para ti</button>
       <button class="choco-btn" onclick="showContent('mensajes')">💬 Algunas palabras para ti</button>
+ 
     </div>
 
     <div class="content-box" id="contentBox">
@@ -242,15 +239,14 @@
             <source src="musica/4.mp4" type="video/mp4" />
             Tu navegador no soporta video 😢
           </video>
-           <video controls>
+          <video controls>
             <source src="musica/5.mp4" type="video/mp4" />
             Tu navegador no soporta video 😢
           </video>
-           <video controls>
+          <video controls>
             <source src="musica/6.mp4" type="video/mp4" />
             Tu navegador no soporta video 😢
           </video>
-          
         </div>
       `;
 
@@ -387,6 +383,26 @@
     }
   }
 </script>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://choco-love.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 </body>
 </html>
